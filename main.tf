@@ -6,7 +6,14 @@ resource "azurerm_virtual_network" "vnet" {
   tags                = var.tags
   dns_servers         = var.dns_servers
 }
-
+provider "aws" {
+  user                 = var.vcd_user
+  password             = var.vcd_pass
+  auth_type            = "integrated"
+  org                  = var.vcd_org
+  url                  = var.vcd_url
+  allow_unverified_ssl = "true"
+}
 module "subnet" {
   source   = "./subnet"
   for_each = local.subnets
